@@ -1,0 +1,2 @@
+destinations='[{"name":"No_binding","url":"https://No_binding.dest","proxyHost":"http://127.0.0.1","proxyPort":"8887"}]'
+cds_requires='{"BusinessPartner":{"impl":"@sap/cds/srv/remote-service.js","external":true,"kind":"odata-v2","model":"srv/external/BusinessPartner","credentials":{"destination":"No_binding"}}}'

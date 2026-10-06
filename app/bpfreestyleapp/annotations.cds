@@ -1,0 +1,1 @@
+using BPExtension as service from '../../srv/bpExtension';

@@ -1,0 +1,1855 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="4.0" xmlns:edmx="http://docs.oasis-open.org/odata/ns/edmx">
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Capabilities.V1.xml">
+    <edmx:Include Alias="Capabilities" Namespace="Org.OData.Capabilities.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/Common.xml">
+    <edmx:Include Alias="Common" Namespace="com.sap.vocabularies.Common.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Core.V1.xml">
+    <edmx:Include Alias="Core" Namespace="Org.OData.Core.V1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://sap.github.io/odata-vocabularies/vocabularies/UI.xml">
+    <edmx:Include Alias="UI" Namespace="com.sap.vocabularies.UI.v1"/>
+  </edmx:Reference>
+  <edmx:Reference Uri="https://oasis-tcs.github.io/odata-vocabularies/vocabularies/Org.OData.Validation.V1.xml">
+    <edmx:Include Alias="Validation" Namespace="Org.OData.Validation.V1"/>
+  </edmx:Reference>
+  <edmx:DataServices>
+    <Schema Namespace="MasterDataService" xmlns="http://docs.oasis-open.org/odata/ns/edm">
+      <Annotation Term="Core.Links">
+        <Collection>
+          <Record>
+            <PropertyValue Property="rel" String="author"/>
+            <PropertyValue Property="href" String="https://cap.cloud.sap"/>
+          </Record>
+        </Collection>
+      </Annotation>
+      <EntityContainer Name="EntityContainer">
+        <EntitySet Name="Address" EntityType="MasterDataService.Address">
+          <NavigationPropertyBinding Path="countryKey" Target="Countries"/>
+          <NavigationPropertyBinding Path="companyCodes" Target="CompanyCode"/>
+        </EntitySet>
+        <EntitySet Name="BusinessPartner" EntityType="MasterDataService.BusinessPartner">
+          <NavigationPropertyBinding Path="companyCodeID" Target="CompanyCode"/>
+          <NavigationPropertyBinding Path="addressID" Target="Address"/>
+          <NavigationPropertyBinding Path="language" Target="Languages"/>
+          <NavigationPropertyBinding Path="businessPartnerContactPersons" Target="BusinessPartnerContactPersons"/>
+        </EntitySet>
+        <EntitySet Name="BusinessPartnerContactPersons" EntityType="MasterDataService.BusinessPartnerContactPersons">
+          <NavigationPropertyBinding Path="businessPartner" Target="BusinessPartner"/>
+        </EntitySet>
+        <EntitySet Name="CompanyCode" EntityType="MasterDataService.CompanyCode">
+          <NavigationPropertyBinding Path="countryKey" Target="Countries"/>
+          <NavigationPropertyBinding Path="currency" Target="Currencies"/>
+          <NavigationPropertyBinding Path="addressID" Target="Address"/>
+          <NavigationPropertyBinding Path="plants" Target="Plant"/>
+          <NavigationPropertyBinding Path="businessPartners" Target="BusinessPartner"/>
+        </EntitySet>
+        <EntitySet Name="SalesDistributionChannel" EntityType="MasterDataService.SalesDistributionChannel"/>
+        <EntitySet Name="SalesDivision" EntityType="MasterDataService.SalesDivision"/>
+        <EntitySet Name="MaterialMasterGeneralData" EntityType="MasterDataService.MaterialMasterGeneralData">
+          <NavigationPropertyBinding Path="baseUnitOfMeasure" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="weightUnit" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="volumeUnit" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="plants" Target="MaterialMasterPlantData"/>
+          <NavigationPropertyBinding Path="texts" Target="MaterialMasterGeneralData_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="MaterialMasterGeneralData_texts"/>
+        </EntitySet>
+        <EntitySet Name="MaterialMasterPlantData" EntityType="MasterDataService.MaterialMasterPlantData">
+          <NavigationPropertyBinding Path="materialCodeID" Target="MaterialMasterGeneralData"/>
+          <NavigationPropertyBinding Path="plantID" Target="Plant"/>
+          <NavigationPropertyBinding Path="weightUnit" Target="UnitOfMeasures"/>
+        </EntitySet>
+        <EntitySet Name="MaterialSales" EntityType="MasterDataService.MaterialSales"/>
+        <EntitySet Name="Plant" EntityType="MasterDataService.Plant">
+          <NavigationPropertyBinding Path="companyCodeID" Target="CompanyCode"/>
+          <NavigationPropertyBinding Path="addressID" Target="Address"/>
+          <NavigationPropertyBinding Path="materialMasterPlantData" Target="MaterialMasterPlantData"/>
+          <NavigationPropertyBinding Path="storageLocation" Target="StorageLocation"/>
+          <NavigationPropertyBinding Path="sourceSystem" Target="SourceSystemInfos"/>
+        </EntitySet>
+        <EntitySet Name="SalesOrganizations" EntityType="MasterDataService.SalesOrganizations"/>
+        <EntitySet Name="StorageLocation" EntityType="MasterDataService.StorageLocation">
+          <NavigationPropertyBinding Path="plantCodeID" Target="Plant"/>
+        </EntitySet>
+        <EntitySet Name="User" EntityType="MasterDataService.User"/>
+        <EntitySet Name="MaterialMasterGeneralDataText" EntityType="MasterDataService.MaterialMasterGeneralDataText"/>
+        <EntitySet Name="MaterialSerialNumber" EntityType="MasterDataService.MaterialSerialNumber">
+          <NavigationPropertyBinding Path="materialID" Target="MaterialMasterGeneralData"/>
+          <NavigationPropertyBinding Path="materialSerialAddlStatus" Target="MaterialSerialAddlStatusRel"/>
+          <NavigationPropertyBinding Path="postingDocumentSerialNumbers" Target="PostingDocumentSerialNumbers"/>
+        </EntitySet>
+        <EntitySet Name="MaterialSerialAddlStatusRel" EntityType="MasterDataService.MaterialSerialAddlStatusRel">
+          <NavigationPropertyBinding Path="materialSerialNumberID" Target="MaterialSerialNumber"/>
+          <NavigationPropertyBinding Path="materialSerialAddlStatusValID" Target="MaterialSerialStatusCode"/>
+        </EntitySet>
+        <EntitySet Name="MaterialSerialStatusType" EntityType="MasterDataService.MaterialSerialStatusType">
+          <NavigationPropertyBinding Path="texts" Target="MaterialSerialStatusType_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="MaterialSerialStatusType_texts"/>
+        </EntitySet>
+        <EntitySet Name="MaterialSerialStatusCode" EntityType="MasterDataService.MaterialSerialStatusCode">
+          <NavigationPropertyBinding Path="statusType" Target="MaterialSerialStatusType"/>
+          <NavigationPropertyBinding Path="texts" Target="MaterialSerialStatusCode_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="MaterialSerialStatusCode_texts"/>
+        </EntitySet>
+        <EntitySet Name="UnitOfMeasures" EntityType="MasterDataService.UnitOfMeasures">
+          <NavigationPropertyBinding Path="texts" Target="UnitOfMeasures_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="UnitOfMeasures_texts"/>
+        </EntitySet>
+        <EntitySet Name="SalesDocumentTypes" EntityType="MasterDataService.SalesDocumentTypes">
+          <NavigationPropertyBinding Path="texts" Target="SalesDocumentTypes_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="SalesDocumentTypes_texts"/>
+        </EntitySet>
+        <EntitySet Name="PlanningRelevances" EntityType="MasterDataService.PlanningRelevances">
+          <NavigationPropertyBinding Path="texts" Target="PlanningRelevances_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="PlanningRelevances_texts"/>
+        </EntitySet>
+        <EntitySet Name="Countries" EntityType="MasterDataService.Countries">
+          <NavigationPropertyBinding Path="texts" Target="Countries_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="Countries_texts"/>
+        </EntitySet>
+        <EntitySet Name="Languages" EntityType="MasterDataService.Languages">
+          <NavigationPropertyBinding Path="texts" Target="Languages_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="Languages_texts"/>
+        </EntitySet>
+        <EntitySet Name="Currencies" EntityType="MasterDataService.Currencies">
+          <NavigationPropertyBinding Path="texts" Target="Currencies_texts"/>
+          <NavigationPropertyBinding Path="localized" Target="Currencies_texts"/>
+        </EntitySet>
+        <EntitySet Name="SourceSystemInfos" EntityType="MasterDataService.SourceSystemInfos">
+          <NavigationPropertyBinding Path="plant" Target="Plant"/>
+        </EntitySet>
+        <EntitySet Name="PostingDocumentSerialNumbers" EntityType="MasterDataService.PostingDocumentSerialNumbers">
+          <NavigationPropertyBinding Path="postingDocumentNumber" Target="PostingDocuments"/>
+          <NavigationPropertyBinding Path="serialNumber" Target="MaterialSerialNumber"/>
+        </EntitySet>
+        <EntitySet Name="PostingDocuments" EntityType="MasterDataService.PostingDocuments">
+          <NavigationPropertyBinding Path="partnerRelation" Target="AdditionalAccountPartnerRelationships"/>
+          <NavigationPropertyBinding Path="referencePostingDocumentID" Target="ActivePostingDocuments"/>
+          <NavigationPropertyBinding Path="returnableMaterialUOM" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="deliveryNoteUOM" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="material" Target="MaterialMasterGeneralData"/>
+          <NavigationPropertyBinding Path="referenceDocument" Target="ReferenceDocuments"/>
+          <NavigationPropertyBinding Path="postingDocSerialNumbers" Target="PostingDocumentSerialNumbers"/>
+          <NavigationPropertyBinding Path="alertLogs" Target="PostingDocumentAlertLogs"/>
+        </EntitySet>
+        <EntitySet Name="AdditionalAccountPartnerRelationships" EntityType="MasterDataService.AdditionalAccountPartnerRelationships">
+          <NavigationPropertyBinding Path="companyCode" Target="CompanyCode"/>
+          <NavigationPropertyBinding Path="totalAccountBalanceUOM" Target="UnitOfMeasures"/>
+        </EntitySet>
+        <EntitySet Name="ActivePostingDocuments" EntityType="MasterDataService.ActivePostingDocuments">
+          <NavigationPropertyBinding Path="partnerRelation" Target="AdditionalAccountPartnerRelationships"/>
+          <NavigationPropertyBinding Path="referencePostingDocumentID" Target="ActivePostingDocuments"/>
+          <NavigationPropertyBinding Path="returnableMaterialUOM" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="deliveryNoteUOM" Target="UnitOfMeasures"/>
+          <NavigationPropertyBinding Path="material" Target="MaterialMasterGeneralData"/>
+          <NavigationPropertyBinding Path="referenceDocument" Target="ReferenceDocuments"/>
+          <NavigationPropertyBinding Path="postingDocSerialNumbers" Target="PostingDocumentSerialNumbers"/>
+          <NavigationPropertyBinding Path="alertLogs" Target="PostingDocumentAlertLogs"/>
+        </EntitySet>
+        <EntitySet Name="ReferenceDocuments" EntityType="MasterDataService.ReferenceDocuments">
+          <NavigationPropertyBinding Path="parentID" Target="PostingDocuments"/>
+        </EntitySet>
+        <EntitySet Name="PostingDocumentAlertLogs" EntityType="MasterDataService.PostingDocumentAlertLogs">
+          <NavigationPropertyBinding Path="postingDocument" Target="PostingDocuments"/>
+        </EntitySet>
+        <EntitySet Name="MaterialMasterGeneralData_texts" EntityType="MasterDataService.MaterialMasterGeneralData_texts"/>
+        <EntitySet Name="MaterialSerialStatusType_texts" EntityType="MasterDataService.MaterialSerialStatusType_texts"/>
+        <EntitySet Name="MaterialSerialStatusCode_texts" EntityType="MasterDataService.MaterialSerialStatusCode_texts"/>
+        <EntitySet Name="UnitOfMeasures_texts" EntityType="MasterDataService.UnitOfMeasures_texts"/>
+        <EntitySet Name="SalesDocumentTypes_texts" EntityType="MasterDataService.SalesDocumentTypes_texts"/>
+        <EntitySet Name="PlanningRelevances_texts" EntityType="MasterDataService.PlanningRelevances_texts"/>
+        <EntitySet Name="Countries_texts" EntityType="MasterDataService.Countries_texts"/>
+        <EntitySet Name="Languages_texts" EntityType="MasterDataService.Languages_texts"/>
+        <EntitySet Name="Currencies_texts" EntityType="MasterDataService.Currencies_texts"/>
+      </EntityContainer>
+      <EntityType Name="Address">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="address" Type="Edm.String"/>
+        <Property Name="street" Type="Edm.String" MaxLength="60"/>
+        <Property Name="houseNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="addressLine1" Type="Edm.String" MaxLength="60"/>
+        <Property Name="addressLine2" Type="Edm.String" MaxLength="60"/>
+        <Property Name="addressLine3" Type="Edm.String" MaxLength="60"/>
+        <Property Name="postalCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="city" Type="Edm.String" MaxLength="40"/>
+        <NavigationProperty Name="countryKey" Type="MasterDataService.Countries">
+          <ReferentialConstraint Property="countryKey_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="countryKey_code" Type="Edm.String" MaxLength="3"/>
+        <Property Name="country" Type="Edm.String" MaxLength="60"/>
+        <Property Name="poBox" Type="Edm.String" MaxLength="10"/>
+        <Property Name="mobile" Type="Edm.String" MaxLength="30"/>
+        <Property Name="telephone" Type="Edm.String" MaxLength="30"/>
+        <Property Name="extension" Type="Edm.String" MaxLength="10"/>
+        <Property Name="faxNumber" Type="Edm.String" MaxLength="31"/>
+        <Property Name="email" Type="Edm.String" MaxLength="241"/>
+        <Property Name="contactPerson" Type="Edm.String" MaxLength="60"/>
+        <NavigationProperty Name="companyCodes" Type="Collection(MasterDataService.CompanyCode)" Partner="addressID"/>
+      </EntityType>
+      <EntityType Name="BusinessPartner">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="businessPartnerNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="vendorCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="customerCode" Type="Edm.String" MaxLength="10"/>
+        <NavigationProperty Name="companyCodeID" Type="MasterDataService.CompanyCode">
+          <ReferentialConstraint Property="companyCodeID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="companyCodeID_ID" Type="Edm.Guid"/>
+        <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+        <Property Name="businessPartnerName1" Type="Edm.String" MaxLength="60"/>
+        <Property Name="businessPartnerName2" Type="Edm.String" MaxLength="60"/>
+        <NavigationProperty Name="addressID" Type="MasterDataService.Address">
+          <ReferentialConstraint Property="addressID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="addressID_ID" Type="Edm.Guid"/>
+        <Property Name="address" Type="Edm.String"/>
+        <Property Name="businessPartnerType" Type="Edm.String" MaxLength="2"/>
+        <Property Name="partnerRole_ID" Type="Edm.String"/>
+        <NavigationProperty Name="language" Type="MasterDataService.Languages">
+          <ReferentialConstraint Property="language_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="language_code" Type="Edm.String" MaxLength="14"/>
+        <Property Name="valueClaimExcluded" Type="Edm.Boolean" Nullable="false" DefaultValue="false"/>
+        <Property Name="isMarkedForDeletion" Type="Edm.Boolean" DefaultValue="false"/>
+        <NavigationProperty Name="businessPartnerContactPersons" Type="Collection(MasterDataService.BusinessPartnerContactPersons)" Partner="businessPartner">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <Property Name="parentBusinessPartner" Type="Edm.String" MaxLength="10"/>
+      </EntityType>
+      <EntityType Name="BusinessPartnerContactPersons">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="businessPartner" Type="MasterDataService.BusinessPartner" Partner="businessPartnerContactPersons">
+          <ReferentialConstraint Property="businessPartner_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="businessPartner_ID" Type="Edm.Guid"/>
+        <Property Name="contactName" Type="Edm.String" MaxLength="50"/>
+        <Property Name="contactEmail" Type="Edm.String" MaxLength="100"/>
+        <Property Name="telephone" Type="Edm.String" MaxLength="30"/>
+        <Property Name="documentProcessType_ID" Type="Edm.Int32"/>
+        <Property Name="attachmentType_ID" Type="Edm.Int32"/>
+        <Property Name="attachmentFieldControl" Type="Edm.Int32"/>
+        <Property Name="documentProcessTypeCode" Type="Edm.String"/>
+        <Property Name="attachmentTypeCode" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="CompanyCode">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+        <Property Name="companyCodeName" Type="Edm.String" MaxLength="60"/>
+        <NavigationProperty Name="countryKey" Type="MasterDataService.Countries">
+          <ReferentialConstraint Property="countryKey_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="countryKey_code" Type="Edm.String" MaxLength="3"/>
+        <NavigationProperty Name="currency" Type="MasterDataService.Currencies">
+          <ReferentialConstraint Property="currency_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="currency_code" Type="Edm.String" MaxLength="3"/>
+        <NavigationProperty Name="addressID" Type="MasterDataService.Address" Partner="companyCodes">
+          <ReferentialConstraint Property="addressID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="addressID_ID" Type="Edm.Guid"/>
+        <Property Name="address" Type="Edm.String"/>
+        <NavigationProperty Name="plants" Type="Collection(MasterDataService.Plant)"/>
+        <NavigationProperty Name="businessPartners" Type="Collection(MasterDataService.BusinessPartner)"/>
+      </EntityType>
+      <EntityType Name="SalesDistributionChannel">
+        <Key>
+          <PropertyRef Name="distributionChannel"/>
+          <PropertyRef Name="salesOrganization"/>
+        </Key>
+        <Property Name="distributionChannel" Type="Edm.String" MaxLength="2" Nullable="false"/>
+        <Property Name="distributionChannelName" Type="Edm.String" MaxLength="20"/>
+        <Property Name="salesOrganization" Type="Edm.String" MaxLength="4" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="SalesDivision">
+        <Key>
+          <PropertyRef Name="salesDivision"/>
+          <PropertyRef Name="salesOrganization"/>
+        </Key>
+        <Property Name="salesDivision" Type="Edm.String" MaxLength="2" Nullable="false"/>
+        <Property Name="salesDivisionName" Type="Edm.String" MaxLength="20"/>
+        <Property Name="salesOrganization" Type="Edm.String" MaxLength="4" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="MaterialMasterGeneralData">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <Property Name="materialDescription" Type="Edm.String" MaxLength="40"/>
+        <Property Name="materialType" Type="Edm.String" MaxLength="4"/>
+        <Property Name="materialGroup" Type="Edm.String" MaxLength="9"/>
+        <NavigationProperty Name="baseUnitOfMeasure" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="baseUnitOfMeasure_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="baseUnitOfMeasure_code" Type="Edm.String"/>
+        <Property Name="division" Type="Edm.String" MaxLength="2"/>
+        <Property Name="xPlantMaterialStatus" Type="Edm.String" MaxLength="2"/>
+        <Property Name="validFrom" Type="Edm.Date"/>
+        <Property Name="grossWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <NavigationProperty Name="weightUnit" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="weightUnit_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="weightUnit_code" Type="Edm.String"/>
+        <Property Name="netWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="volume" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <NavigationProperty Name="volumeUnit" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="volumeUnit_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="volumeUnit_code" Type="Edm.String"/>
+        <Property Name="sizeDimensions" Type="Edm.String" MaxLength="32"/>
+        <Property Name="EAN_UPC" Type="Edm.String" MaxLength="18"/>
+        <Property Name="EANCategary" Type="Edm.String" MaxLength="2"/>
+        <Property Name="productCompositionIndicator" Type="Edm.String" MaxLength="1"/>
+        <Property Name="packagingMaterialGroup" Type="Edm.String" MaxLength="4"/>
+        <Property Name="materialSerialManaged_ID" Type="Edm.Int32"/>
+        <NavigationProperty Name="plants" Type="Collection(MasterDataService.MaterialMasterPlantData)"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.MaterialMasterGeneralData_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.MaterialMasterGeneralData_texts">
+          <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="MaterialMasterPlantData">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <NavigationProperty Name="materialCodeID" Type="MasterDataService.MaterialMasterGeneralData">
+          <ReferentialConstraint Property="materialCodeID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="materialCodeID_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="plantID" Type="MasterDataService.Plant">
+          <ReferentialConstraint Property="plantID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="plantID_ID" Type="Edm.Guid"/>
+        <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="containerRequirements" Type="Edm.String" MaxLength="2"/>
+        <Property Name="grossWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <NavigationProperty Name="weightUnit" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="weightUnit_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="weightUnit_code" Type="Edm.String"/>
+        <Property Name="netWeight" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="volume" Type="Edm.Decimal" Precision="13" Scale="3"/>
+        <Property Name="serialNumberProfile" Type="Edm.String" MaxLength="4"/>
+        <Property Name="reorderPoint" Type="Edm.String" MaxLength="13"/>
+        <Property Name="mrpType" Type="Edm.String" MaxLength="3"/>
+        <Property Name="pricingIndicator" Type="Edm.String" MaxLength="1"/>
+        <Property Name="standardPrice_price" Type="Edm.Decimal" Precision="11" Scale="2"/>
+        <Property Name="movingAveragePrice_price" Type="Edm.Decimal" Precision="11" Scale="2"/>
+        <Property Name="safetyStock" Type="Edm.Int32"/>
+        <Property Name="maximumStockLevel" Type="Edm.Int32"/>
+        <Property Name="hasStorageLocations" Type="Edm.Boolean" DefaultValue="false"/>
+      </EntityType>
+      <EntityType Name="MaterialSales">
+        <Key>
+          <PropertyRef Name="materialCode"/>
+          <PropertyRef Name="salesOrganization"/>
+          <PropertyRef Name="distributionChannel"/>
+        </Key>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40" Nullable="false"/>
+        <Property Name="salesOrganization" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="distributionChannel" Type="Edm.String" MaxLength="2" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="Plant">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="plantName" Type="Edm.String" MaxLength="60"/>
+        <Property Name="plantNameExtension" Type="Edm.String" MaxLength="40"/>
+        <NavigationProperty Name="companyCodeID" Type="MasterDataService.CompanyCode">
+          <ReferentialConstraint Property="companyCodeID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="companyCodeID_ID" Type="Edm.Guid"/>
+        <Property Name="companyCode" Type="Edm.String" MaxLength="4"/>
+        <Property Name="customerNoOfPlant" Type="Edm.String" MaxLength="10"/>
+        <Property Name="supplierNoOfPlant" Type="Edm.String" MaxLength="10"/>
+        <NavigationProperty Name="addressID" Type="MasterDataService.Address">
+          <ReferentialConstraint Property="addressID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="addressID_ID" Type="Edm.Guid"/>
+        <Property Name="address" Type="Edm.String"/>
+        <Property Name="factoryCalendar" Type="Edm.String" MaxLength="2"/>
+        <NavigationProperty Name="materialMasterPlantData" Type="Collection(MasterDataService.MaterialMasterPlantData)"/>
+        <NavigationProperty Name="storageLocation" Type="Collection(MasterDataService.StorageLocation)"/>
+        <NavigationProperty Name="sourceSystem" Type="MasterDataService.SourceSystemInfos">
+          <OnDelete Action="Cascade"/>
+          <ReferentialConstraint Property="plant_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="SalesOrganizations">
+        <Key>
+          <PropertyRef Name="salesOrganization"/>
+          <PropertyRef Name="companyCode"/>
+        </Key>
+        <Property Name="salesOrganization" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="salesOrganizationName" Type="Edm.String" MaxLength="25"/>
+        <Property Name="companyCode" Type="Edm.String" MaxLength="4" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="StorageLocation">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="storageLocation" Type="Edm.String" MaxLength="4"/>
+        <Property Name="storageLocationName" Type="Edm.String" MaxLength="25"/>
+        <NavigationProperty Name="plantCodeID" Type="MasterDataService.Plant">
+          <ReferentialConstraint Property="plantCodeID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="plantCodeID_ID" Type="Edm.Guid"/>
+        <Property Name="plantCode" Type="Edm.String" MaxLength="4"/>
+      </EntityType>
+      <EntityType Name="User">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="businessUserId" Type="Edm.String" MaxLength="100"/>
+        <Property Name="firstName" Type="Edm.String" MaxLength="50"/>
+        <Property Name="lastName" Type="Edm.String" MaxLength="50"/>
+        <Property Name="number" Type="Edm.String" MaxLength="100"/>
+        <Property Name="email" Type="Edm.String" MaxLength="241"/>
+        <Property Name="address" Type="Edm.String"/>
+        <Property Name="logOnName" Type="Edm.String" MaxLength="100"/>
+        <Property Name="role" Type="Edm.String" MaxLength="2"/>
+      </EntityType>
+      <EntityType Name="MaterialMasterGeneralDataText">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <Property Name="materialDescription" Type="Edm.String" MaxLength="40"/>
+      </EntityType>
+      <EntityType Name="MaterialSerialNumber">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="materialID" Type="MasterDataService.MaterialMasterGeneralData">
+          <ReferentialConstraint Property="materialID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="materialID_ID" Type="Edm.Guid"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <Property Name="serialNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="equipmentNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="assetNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="status_ID" Type="Edm.Int32"/>
+        <Property Name="ownershipType_ID" Type="Edm.String"/>
+        <Property Name="ownership_ID" Type="Edm.Guid"/>
+        <Property Name="ownershipCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="imeiNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="barcode" Type="Edm.String" MaxLength="48"/>
+        <Property Name="rfid" Type="Edm.String" MaxLength="40"/>
+        <Property Name="color" Type="Edm.String" MaxLength="20"/>
+        <NavigationProperty Name="materialSerialAddlStatus" Type="Collection(MasterDataService.MaterialSerialAddlStatusRel)" Partner="materialSerialNumberID">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="postingDocumentSerialNumbers" Type="Collection(MasterDataService.PostingDocumentSerialNumbers)" Partner="serialNumber"/>
+      </EntityType>
+      <EntityType Name="MaterialSerialAddlStatusRel">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="materialSerialNumberID" Type="MasterDataService.MaterialSerialNumber" Partner="materialSerialAddlStatus">
+          <ReferentialConstraint Property="materialSerialNumberID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="materialSerialNumberID_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="materialSerialAddlStatusValID" Type="MasterDataService.MaterialSerialStatusCode">
+          <ReferentialConstraint Property="materialSerialAddlStatusValID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="materialSerialAddlStatusValID_ID" Type="Edm.Guid"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <Property Name="serialNumber" Type="Edm.String" MaxLength="20"/>
+        <Property Name="statusCode" Type="Edm.String" MaxLength="20"/>
+      </EntityType>
+      <EntityType Name="MaterialSerialStatusType">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="statusTypeCode" Type="Edm.String" MaxLength="20"/>
+        <Property Name="statusTypeDescription" Type="Edm.String" MaxLength="60"/>
+        <Property Name="isFieldControl" Type="Edm.Int32"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.MaterialSerialStatusType_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.MaterialSerialStatusType_texts">
+          <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="MaterialSerialStatusCode">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="statusCode" Type="Edm.String" MaxLength="20"/>
+        <NavigationProperty Name="statusType" Type="MasterDataService.MaterialSerialStatusType">
+          <ReferentialConstraint Property="statusType_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="statusType_ID" Type="Edm.Guid"/>
+        <Property Name="statusTypeCode" Type="Edm.String" MaxLength="20"/>
+        <Property Name="statusDescription" Type="Edm.String" MaxLength="60"/>
+        <Property Name="isFieldControl" Type="Edm.Int32"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.MaterialSerialStatusCode_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.MaterialSerialStatusCode_texts">
+          <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="UnitOfMeasures">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="code" Type="Edm.String" Nullable="false"/>
+        <Property Name="isoCode" Type="Edm.String"/>
+        <Property Name="name" Type="Edm.String"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.UnitOfMeasures_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.UnitOfMeasures_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="SalesDocumentTypes">
+        <Key>
+          <PropertyRef Name="documentType"/>
+        </Key>
+        <Property Name="documentType" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="description" Type="Edm.String" MaxLength="20"/>
+        <Property Name="isDefault" Type="Edm.Boolean" DefaultValue="false"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.SalesDocumentTypes_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.SalesDocumentTypes_texts">
+          <ReferentialConstraint Property="documentType" ReferencedProperty="documentType"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="PlanningRelevances">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.PlanningRelevances_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.PlanningRelevances_texts">
+          <ReferentialConstraint Property="ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Countries">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.Countries_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.Countries_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Languages">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.Languages_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.Languages_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="Currencies">
+        <Key>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+        <Property Name="symbol" Type="Edm.String" MaxLength="5"/>
+        <Property Name="minorUnit" Type="Edm.Int16"/>
+        <NavigationProperty Name="texts" Type="Collection(MasterDataService.Currencies_texts)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="localized" Type="MasterDataService.Currencies_texts">
+          <ReferentialConstraint Property="code" ReferencedProperty="code"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="SourceSystemInfos">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="systemType_ID" Type="Edm.String"/>
+        <NavigationProperty Name="plant" Type="MasterDataService.Plant">
+          <ReferentialConstraint Property="plant_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="plant_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="PostingDocumentSerialNumbers">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <NavigationProperty Name="postingDocumentNumber" Type="MasterDataService.PostingDocuments">
+          <ReferentialConstraint Property="postingDocumentNumber_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="postingDocumentNumber_ID" Type="Edm.Guid"/>
+        <Property Name="serialNumberCode" Type="Edm.String" MaxLength="20"/>
+        <NavigationProperty Name="serialNumber" Type="MasterDataService.MaterialSerialNumber" Partner="postingDocumentSerialNumbers">
+          <ReferentialConstraint Property="serialNumber_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="serialNumber_ID" Type="Edm.Guid"/>
+        <Property Name="handlingUnitNumber" Type="Edm.String" MaxLength="30"/>
+      </EntityType>
+      <EntityType Name="PostingDocuments">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="partnerRelation" Type="MasterDataService.AdditionalAccountPartnerRelationships">
+          <ReferentialConstraint Property="partnerRelation_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="partnerRelation_ID" Type="Edm.Guid"/>
+        <Property Name="returnableAccountID_ID" Type="Edm.Guid"/>
+        <Property Name="postingDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <NavigationProperty Name="referencePostingDocumentID" Type="MasterDataService.ActivePostingDocuments">
+          <ReferentialConstraint Property="referencePostingDocumentID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="referencePostingDocumentID_ID" Type="Edm.Guid"/>
+        <Property Name="postingDocumentStatus_ID" Type="Edm.Int32"/>
+        <Property Name="postingDocumentIndicator_ID" Type="Edm.Int32"/>
+        <Property Name="postingType_ID" Type="Edm.Guid"/>
+        <Property Name="postingDate" Type="Edm.Date"/>
+        <Property Name="documentDate" Type="Edm.Date"/>
+        <Property Name="comments" Type="Edm.String"/>
+        <Property Name="reprocessComments" Type="Edm.String"/>
+        <Property Name="cancelComments" Type="Edm.String"/>
+        <Property Name="reversalDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <Property Name="cancelledDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <Property Name="returnableMaterialQuantity" Type="Edm.Int32"/>
+        <NavigationProperty Name="returnableMaterialUOM" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="returnableMaterialUOM_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="returnableMaterialUOM_code" Type="Edm.String"/>
+        <Property Name="informingPartnerType_ID" Type="Edm.String"/>
+        <Property Name="informingPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="senderPartnerType_ID" Type="Edm.String"/>
+        <Property Name="senderPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="senderPartnerDescription" Type="Edm.String"/>
+        <Property Name="recipientPartnerType_ID" Type="Edm.String"/>
+        <Property Name="recipientPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="recipientPartnerDescription" Type="Edm.String"/>
+        <Property Name="settlementPartnerType_ID" Type="Edm.String"/>
+        <Property Name="settlementPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="settlementPartnerDescription" Type="Edm.String"/>
+        <Property Name="deliveryNote" Type="Edm.String"/>
+        <Property Name="deliveryNoteItemNumber" Type="Edm.Int32"/>
+        <Property Name="deliveryNoteQuantity" Type="Edm.Int32"/>
+        <NavigationProperty Name="deliveryNoteUOM" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="deliveryNoteUOM_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="deliveryNoteUOM_code" Type="Edm.String"/>
+        <Property Name="materialDocumentNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="materialDocumentItemNumber" Type="Edm.String" MaxLength="4"/>
+        <Property Name="materialDocumentYear" Type="Edm.String" MaxLength="4"/>
+        <Property Name="vendorCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="customerCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <NavigationProperty Name="material" Type="MasterDataService.MaterialMasterGeneralData">
+          <ReferentialConstraint Property="material_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="material_ID" Type="Edm.Guid"/>
+        <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="movementType" Type="Edm.String" MaxLength="60"/>
+        <Property Name="movementIndicator_ID" Type="Edm.String" MaxLength="1"/>
+        <Property Name="receiptIndicator_ID" Type="Edm.String" MaxLength="1"/>
+        <Property Name="locationType_ID" Type="Edm.String"/>
+        <Property Name="locationID_ID" Type="Edm.Guid"/>
+        <Property Name="partnerType_ID" Type="Edm.String"/>
+        <Property Name="partnerID_ID" Type="Edm.Guid"/>
+        <Property Name="alertCount" Type="Edm.Int32"/>
+        <Property Name="handlingUnitNumber" Type="Edm.String" MaxLength="30"/>
+        <Property Name="totalAccountBalance" Type="Edm.Int32"/>
+        <Property Name="matchedQuantity" Type="Edm.Int32"/>
+        <Property Name="unmatchedQuantity" Type="Edm.Int32"/>
+        <Property Name="matchedStatus_ID" Type="Edm.Int32"/>
+        <Property Name="documentMatchingType_ID" Type="Edm.Int32"/>
+        <Property Name="inventoryStockTypeID_ID" Type="Edm.String" MaxLength="2"/>
+        <NavigationProperty Name="referenceDocument" Type="MasterDataService.ReferenceDocuments" Partner="parentID">
+          <OnDelete Action="Cascade"/>
+          <ReferentialConstraint Property="ID" ReferencedProperty="parentID_ID"/>
+        </NavigationProperty>
+        <NavigationProperty Name="postingDocSerialNumbers" Type="Collection(MasterDataService.PostingDocumentSerialNumbers)" Partner="postingDocumentNumber">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <Property Name="receivingPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="externalDeliveryNoteNumber" Type="Edm.String"/>
+        <Property Name="correctionDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <Property Name="inventoryCount_ID" Type="Edm.Guid"/>
+        <Property Name="referencePackagingIssue_ID" Type="Edm.Guid"/>
+        <Property Name="storageLocation" Type="Edm.String"/>
+        <Property Name="unloadingPoint" Type="Edm.String" MaxLength="25"/>
+        <NavigationProperty Name="alertLogs" Type="Collection(MasterDataService.PostingDocumentAlertLogs)"/>
+        <Property Name="bulkPosting_ID" Type="Edm.Guid"/>
+        <Property Name="isDocumentInError" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="isDocumentBeCancelled" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="isDocumentToBeChecked" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="yearly" Type="Edm.String"/>
+        <Property Name="quarterly" Type="Edm.String"/>
+        <Property Name="monthly" Type="Edm.String"/>
+        <Property Name="isCorrectionPosting" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="isCheckAccountBalance" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="destinationUrl" Type="Edm.String"/>
+        <Property Name="showDeliveryNoteAsLink" Type="Edm.Boolean"/>
+        <Property Name="isApi" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="relationshipBalance" Type="Edm.Int32"/>
+        <Property Name="isBulkPosting" Type="Edm.Boolean" DefaultValue="false"/>
+      </EntityType>
+      <EntityType Name="AdditionalAccountPartnerRelationships">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="locationType_ID" Type="Edm.String"/>
+        <Property Name="locationID_ID" Type="Edm.Guid"/>
+        <Property Name="partnerType_ID" Type="Edm.String"/>
+        <Property Name="partnerID_ID" Type="Edm.Guid"/>
+        <NavigationProperty Name="companyCode" Type="MasterDataService.CompanyCode">
+          <ReferentialConstraint Property="companyCode_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="companyCode_ID" Type="Edm.Guid"/>
+        <Property Name="validFrom" Type="Edm.Date"/>
+        <Property Name="validTo" Type="Edm.Date"/>
+        <Property Name="isMainRelationShip" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="reorderPoint" Type="Edm.Int32"/>
+        <Property Name="leadTime" Type="Edm.Int32"/>
+        <Property Name="orderQuantity" Type="Edm.Int32"/>
+        <Property Name="totalAccountBalance" Type="Edm.Int32"/>
+        <NavigationProperty Name="totalAccountBalanceUOM" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="totalAccountBalanceUOM_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="totalAccountBalanceUOM_code" Type="Edm.String"/>
+        <Property Name="returnableAccountID_ID" Type="Edm.Guid"/>
+        <Property Name="reimburseDeliveryCharge_ID" Type="Edm.Int32"/>
+        <Property Name="isFieldControl" Type="Edm.Int32"/>
+        <Property Name="mainRelationshipFieldControl" Type="Edm.Int32"/>
+        <Property Name="mainRelationshipHighlight" Type="Edm.Int32"/>
+        <Property Name="isNotMainRelationship" Type="Edm.Boolean"/>
+        <Property Name="isCreate" Type="Edm.Boolean"/>
+        <Property Name="isUpdate" Type="Edm.Boolean"/>
+        <Property Name="isDelete" Type="Edm.Boolean"/>
+        <Property Name="partnerReturnableAccountID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="ActivePostingDocuments">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <NavigationProperty Name="partnerRelation" Type="MasterDataService.AdditionalAccountPartnerRelationships">
+          <ReferentialConstraint Property="partnerRelation_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="partnerRelation_ID" Type="Edm.Guid"/>
+        <Property Name="returnableAccountID_ID" Type="Edm.Guid"/>
+        <Property Name="postingDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <NavigationProperty Name="referencePostingDocumentID" Type="MasterDataService.ActivePostingDocuments">
+          <ReferentialConstraint Property="referencePostingDocumentID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="referencePostingDocumentID_ID" Type="Edm.Guid"/>
+        <Property Name="postingDocumentStatus_ID" Type="Edm.Int32"/>
+        <Property Name="postingDocumentIndicator_ID" Type="Edm.Int32"/>
+        <Property Name="postingType_ID" Type="Edm.Guid"/>
+        <Property Name="postingDate" Type="Edm.Date"/>
+        <Property Name="documentDate" Type="Edm.Date"/>
+        <Property Name="comments" Type="Edm.String"/>
+        <Property Name="reprocessComments" Type="Edm.String"/>
+        <Property Name="cancelComments" Type="Edm.String"/>
+        <Property Name="reversalDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <Property Name="cancelledDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <Property Name="returnableMaterialQuantity" Type="Edm.Int32"/>
+        <NavigationProperty Name="returnableMaterialUOM" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="returnableMaterialUOM_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="returnableMaterialUOM_code" Type="Edm.String"/>
+        <Property Name="informingPartnerType_ID" Type="Edm.String"/>
+        <Property Name="informingPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="senderPartnerType_ID" Type="Edm.String"/>
+        <Property Name="senderPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="senderPartnerDescription" Type="Edm.String"/>
+        <Property Name="recipientPartnerType_ID" Type="Edm.String"/>
+        <Property Name="recipientPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="recipientPartnerDescription" Type="Edm.String"/>
+        <Property Name="settlementPartnerType_ID" Type="Edm.String"/>
+        <Property Name="settlementPartnerID_ID" Type="Edm.Guid"/>
+        <Property Name="settlementPartnerDescription" Type="Edm.String"/>
+        <Property Name="deliveryNote" Type="Edm.String"/>
+        <Property Name="deliveryNoteItemNumber" Type="Edm.Int32"/>
+        <Property Name="deliveryNoteQuantity" Type="Edm.Int32"/>
+        <NavigationProperty Name="deliveryNoteUOM" Type="MasterDataService.UnitOfMeasures">
+          <ReferentialConstraint Property="deliveryNoteUOM_code" ReferencedProperty="code"/>
+        </NavigationProperty>
+        <Property Name="deliveryNoteUOM_code" Type="Edm.String"/>
+        <Property Name="materialDocumentNumber" Type="Edm.String" MaxLength="10"/>
+        <Property Name="materialDocumentItemNumber" Type="Edm.String" MaxLength="4"/>
+        <Property Name="materialDocumentYear" Type="Edm.String" MaxLength="4"/>
+        <Property Name="vendorCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="customerCode" Type="Edm.String" MaxLength="10"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <NavigationProperty Name="material" Type="MasterDataService.MaterialMasterGeneralData">
+          <ReferentialConstraint Property="material_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="material_ID" Type="Edm.Guid"/>
+        <Property Name="plant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="movementType" Type="Edm.String" MaxLength="60"/>
+        <Property Name="movementIndicator_ID" Type="Edm.String" MaxLength="1"/>
+        <Property Name="receiptIndicator_ID" Type="Edm.String" MaxLength="1"/>
+        <Property Name="locationType_ID" Type="Edm.String"/>
+        <Property Name="locationID_ID" Type="Edm.Guid"/>
+        <Property Name="partnerType_ID" Type="Edm.String"/>
+        <Property Name="partnerID_ID" Type="Edm.Guid"/>
+        <Property Name="alertCount" Type="Edm.Int32"/>
+        <Property Name="handlingUnitNumber" Type="Edm.String" MaxLength="30"/>
+        <Property Name="totalAccountBalance" Type="Edm.Int32"/>
+        <Property Name="matchedQuantity" Type="Edm.Int32"/>
+        <Property Name="unmatchedQuantity" Type="Edm.Int32"/>
+        <Property Name="matchedStatus_ID" Type="Edm.Int32"/>
+        <Property Name="documentMatchingType_ID" Type="Edm.Int32"/>
+        <Property Name="inventoryStockTypeID_ID" Type="Edm.String" MaxLength="2"/>
+        <NavigationProperty Name="referenceDocument" Type="MasterDataService.ReferenceDocuments">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <NavigationProperty Name="postingDocSerialNumbers" Type="Collection(MasterDataService.PostingDocumentSerialNumbers)">
+          <OnDelete Action="Cascade"/>
+        </NavigationProperty>
+        <Property Name="receivingPlant" Type="Edm.String" MaxLength="4"/>
+        <Property Name="externalDeliveryNoteNumber" Type="Edm.String"/>
+        <Property Name="correctionDocumentNumber" Type="Edm.String" MaxLength="21"/>
+        <Property Name="inventoryCount_ID" Type="Edm.Guid"/>
+        <Property Name="referencePackagingIssue_ID" Type="Edm.Guid"/>
+        <Property Name="storageLocation" Type="Edm.String"/>
+        <Property Name="unloadingPoint" Type="Edm.String" MaxLength="25"/>
+        <NavigationProperty Name="alertLogs" Type="Collection(MasterDataService.PostingDocumentAlertLogs)"/>
+        <Property Name="bulkPosting_ID" Type="Edm.Guid"/>
+        <Property Name="isDocumentInError" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="isDocumentBeCancelled" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="isDocumentToBeChecked" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="yearly" Type="Edm.String"/>
+        <Property Name="quarterly" Type="Edm.String"/>
+        <Property Name="monthly" Type="Edm.String"/>
+        <Property Name="isCorrectionPosting" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="isCheckAccountBalance" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="destinationUrl" Type="Edm.String"/>
+        <Property Name="showDeliveryNoteAsLink" Type="Edm.Boolean"/>
+        <Property Name="isApi" Type="Edm.Boolean" DefaultValue="false"/>
+        <Property Name="relationshipBalance" Type="Edm.Int32"/>
+        <Property Name="isBulkPosting" Type="Edm.Boolean" DefaultValue="false"/>
+      </EntityType>
+      <EntityType Name="ReferenceDocuments">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="referenceDocument" Type="Edm.String"/>
+        <Property Name="referenceDocumentDate" Type="Edm.Date"/>
+        <Property Name="billOfLading" Type="Edm.String"/>
+        <NavigationProperty Name="parentID" Type="MasterDataService.PostingDocuments">
+          <ReferentialConstraint Property="parentID_ID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+        <Property Name="parentID_ID" Type="Edm.Guid"/>
+      </EntityType>
+      <EntityType Name="PostingDocumentAlertLogs">
+        <Key>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="createdAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="createdBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="modifiedAt" Type="Edm.DateTimeOffset" Precision="7"/>
+        <Property Name="modifiedBy" Type="Edm.String" MaxLength="255"/>
+        <Property Name="message" Type="Edm.String"/>
+        <Property Name="placeholderValues" Type="Edm.String"/>
+        <Property Name="details" Type="Edm.String"/>
+        <Property Name="order" Type="Edm.Int32" DefaultValue="0"/>
+        <Property Name="correctiveActions" Type="Edm.String"/>
+        <Property Name="isRelevantForNotificaton" Type="Edm.Boolean"/>
+        <Property Name="isRelevantForNotification" Type="Edm.Boolean"/>
+        <Property Name="alertCategory_ID" Type="Edm.Int32"/>
+        <Property Name="alertSeverity_ID" Type="Edm.Int32"/>
+        <Property Name="alertSource_ID" Type="Edm.Int32"/>
+        <Property Name="alertSourceUID" Type="Edm.String" MaxLength="36"/>
+        <Property Name="detailsPlaceholderValues" Type="Edm.String"/>
+        <NavigationProperty Name="postingDocument" Type="MasterDataService.PostingDocuments">
+          <ReferentialConstraint Property="alertSourceUID" ReferencedProperty="ID"/>
+        </NavigationProperty>
+      </EntityType>
+      <EntityType Name="MaterialMasterGeneralData_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="materialCode" Type="Edm.String" MaxLength="40"/>
+        <Property Name="materialDescription" Type="Edm.String" MaxLength="40"/>
+      </EntityType>
+      <EntityType Name="MaterialSerialStatusType_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="statusTypeDescription" Type="Edm.String" MaxLength="60"/>
+      </EntityType>
+      <EntityType Name="MaterialSerialStatusCode_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="ID" Type="Edm.Guid" Nullable="false"/>
+        <Property Name="statusDescription" Type="Edm.String" MaxLength="60"/>
+      </EntityType>
+      <EntityType Name="UnitOfMeasures_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="code" Type="Edm.String" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="SalesDocumentTypes_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="documentType"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="documentType" Type="Edm.String" MaxLength="4" Nullable="false"/>
+        <Property Name="description" Type="Edm.String" MaxLength="20"/>
+      </EntityType>
+      <EntityType Name="PlanningRelevances_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="ID"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="ID" Type="Edm.Int32" Nullable="false"/>
+        <Property Name="name" Type="Edm.String"/>
+      </EntityType>
+      <EntityType Name="Countries_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="Languages_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="14" Nullable="false"/>
+      </EntityType>
+      <EntityType Name="Currencies_texts">
+        <Key>
+          <PropertyRef Name="locale"/>
+          <PropertyRef Name="code"/>
+        </Key>
+        <Property Name="locale" Type="Edm.String" MaxLength="14" Nullable="false"/>
+        <Property Name="name" Type="Edm.String" MaxLength="255"/>
+        <Property Name="descr" Type="Edm.String" MaxLength="1000"/>
+        <Property Name="code" Type="Edm.String" MaxLength="3" Nullable="false"/>
+      </EntityType>
+      <Annotations Target="MasterDataService.Address/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Address/countryKey">
+        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+        <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Address/countryKey_code">
+        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Country}"/>
+            <PropertyValue Property="CollectionPath" String="Countries"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="countryKey_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/language">
+        <Annotation Term="Common.Label" String="{i18n>Language}"/>
+        <Annotation Term="Core.Description" String="{i18n>LanguageCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartner/language_code">
+        <Annotation Term="Common.Label" String="{i18n>Language}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Language}"/>
+            <PropertyValue Property="CollectionPath" String="Languages"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="language_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>LanguageCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartnerContactPersons/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartnerContactPersons/attachmentFieldControl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartnerContactPersons/documentProcessTypeCode">
+        <Annotation Term="Core.Computed" Bool="false"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.BusinessPartnerContactPersons/attachmentTypeCode">
+        <Annotation Term="Core.Computed" Bool="false"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.CompanyCode/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.CompanyCode/countryKey">
+        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+        <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.CompanyCode/countryKey_code">
+        <Annotation Term="Common.Label" String="{i18n>Country}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Country}"/>
+            <PropertyValue Property="CollectionPath" String="Countries"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="countryKey_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CountryCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.CompanyCode/currency">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.CompanyCode/currency_code">
+        <Annotation Term="Common.Label" String="{i18n>Currency}"/>
+        <Annotation Term="Common.ValueList">
+          <Record Type="Common.ValueListType">
+            <PropertyValue Property="Label" String="{i18n>Currency}"/>
+            <PropertyValue Property="CollectionPath" String="Currencies"/>
+            <PropertyValue Property="Parameters">
+              <Collection>
+                <Record Type="Common.ValueListParameterInOut">
+                  <PropertyValue Property="LocalDataProperty" PropertyPath="currency_code"/>
+                  <PropertyValue Property="ValueListProperty" String="code"/>
+                </Record>
+                <Record Type="Common.ValueListParameterDisplayOnly">
+                  <PropertyValue Property="ValueListProperty" String="name"/>
+                </Record>
+              </Collection>
+            </PropertyValue>
+          </Record>
+        </Annotation>
+        <Annotation Term="Core.Description" String="{i18n>CurrencyCode.Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterPlantData/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterPlantData/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterPlantData/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterPlantData/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterPlantData/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterPlantData/hasStorageLocations">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Plant/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.StorageLocation/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.User/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralDataText/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralDataText/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialNumber/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialNumber/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialNumber/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialNumber/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialNumber/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialAddlStatusRel/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialAddlStatusRel/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialAddlStatusRel/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialAddlStatusRel/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialAddlStatusRel/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType/isFieldControl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode/isFieldControl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.EntityContainer/PlanningRelevances">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.PlanningRelevances/ID">
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="AUTOMATIC_REPLENISHMENT_CREATION"/>
+              <PropertyValue Property="Value" Int="1"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="MANUAL_REPLENISHMENT_CREATION"/>
+              <PropertyValue Property="Value" Int="2"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies">
+        <Annotation Term="UI.Identification">
+          <Collection>
+            <Record Type="UI.DataField">
+              <PropertyValue Property="Value" Path="name"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies/symbol">
+        <Annotation Term="Common.Label" String="{i18n>CurrencySymbol}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies/minorUnit">
+        <Annotation Term="Common.Label" String="{i18n>CurrencyMinorUnit}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.SourceSystemInfos/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocumentSerialNumbers/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isDocumentInError">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isDocumentBeCancelled">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isDocumentToBeChecked">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/yearly">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/quarterly">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/monthly">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isCorrectionPosting">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isCheckAccountBalance">
+        <Annotation Term="Core.Computed" Bool="false"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/destinationUrl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/showDeliveryNoteAsLink">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isApi">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/relationshipBalance">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocuments/isBulkPosting">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.EntityContainer/AdditionalAccountPartnerRelationships">
+        <Annotation Term="Capabilities.DeleteRestrictions">
+          <Record Type="Capabilities.DeleteRestrictionsType">
+            <PropertyValue Property="Deletable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.InsertRestrictions">
+          <Record Type="Capabilities.InsertRestrictionsType">
+            <PropertyValue Property="Insertable" Bool="false"/>
+          </Record>
+        </Annotation>
+        <Annotation Term="Capabilities.UpdateRestrictions">
+          <Record Type="Capabilities.UpdateRestrictionsType">
+            <PropertyValue Property="Updatable" Bool="false"/>
+          </Record>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/isFieldControl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/mainRelationshipFieldControl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/mainRelationshipHighlight">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/isNotMainRelationship">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/isCreate">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/isUpdate">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.AdditionalAccountPartnerRelationships/isDelete">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isDocumentInError">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isDocumentBeCancelled">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isDocumentToBeChecked">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/yearly">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/quarterly">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/monthly">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isCorrectionPosting">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isCheckAccountBalance">
+        <Annotation Term="Core.Computed" Bool="false"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/destinationUrl">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/showDeliveryNoteAsLink">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isApi">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/relationshipBalance">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ActivePostingDocuments/isBulkPosting">
+        <Annotation Term="Core.Computed" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ReferenceDocuments/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ReferenceDocuments/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ReferenceDocuments/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ReferenceDocuments/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.ReferenceDocuments/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocumentAlertLogs/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocumentAlertLogs/createdAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocumentAlertLogs/createdBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Immutable" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>CreatedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocumentAlertLogs/modifiedAt">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedAt}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PostingDocumentAlertLogs/modifiedBy">
+        <Annotation Term="UI.HiddenFilter" Bool="true"/>
+        <Annotation Term="UI.ExcludeFromNavigationContext" Bool="true"/>
+        <Annotation Term="Core.Computed" Bool="true"/>
+        <Annotation Term="Core.Description" String="{i18n>UserID.Description}"/>
+        <Annotation Term="Common.Label" String="{i18n>ChangedBy}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialMasterGeneralData_texts/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusType_texts/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.MaterialSerialStatusCode_texts/ID">
+        <Annotation Term="Core.ComputedDefaultValue" Bool="true"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.UnitOfMeasures_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.SalesDocumentTypes_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PlanningRelevances_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.PlanningRelevances_texts/ID">
+        <Annotation Term="Validation.AllowedValues">
+          <Collection>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="AUTOMATIC_REPLENISHMENT_CREATION"/>
+              <PropertyValue Property="Value" Int="1"/>
+            </Record>
+            <Record Type="Validation.AllowedValue">
+              <Annotation Term="Core.SymbolicName" String="MANUAL_REPLENISHMENT_CREATION"/>
+              <PropertyValue Property="Value" Int="2"/>
+            </Record>
+          </Collection>
+        </Annotation>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries_texts/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries_texts/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Countries_texts/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CountryCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages_texts/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages_texts/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Languages_texts/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies_texts/locale">
+        <Annotation Term="Common.Label" String="{i18n>LanguageCode}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies_texts/name">
+        <Annotation Term="Common.Label" String="{i18n>Name}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies_texts/descr">
+        <Annotation Term="Common.Label" String="{i18n>Description}"/>
+      </Annotations>
+      <Annotations Target="MasterDataService.Currencies_texts/code">
+        <Annotation Term="Common.Text" Path="name"/>
+        <Annotation Term="Common.Label" String="{i18n>CurrencyCode}"/>
+      </Annotations>
+    </Schema>
+  </edmx:DataServices>
+</edmx:Edmx>

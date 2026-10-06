@@ -1,0 +1,60 @@
+{
+  "name": "bp_cap",
+  "version": "1.0.0",
+  "description": "Welcome to your new CAP project.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "watch-businesspartnerapp": "cds watch --open businesspartnerapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "undeploy": "cf undeploy bp_cap --delete-services --delete-service-keys --delete-service-brokers",
+    "build": "rimraf resources mta_archives && mbt build --mtar archive",
+    "deploy": "cf deploy mta_archives/archive.mtar --retries 1",
+    "watch-bpfreestyleapp": "cds watch --open bpfreestyleapp/index.html?sap-ui-xx-viewCache=false --livereload false",
+    "start": "cds-serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "cds": {
+    "requires": {
+      "auth": {
+        "kind": "mocked"
+      },
+      "BusinessPartner": {
+        "kind": "odata-v4",
+        "model": "srv/external/BusinessPartner",
+        "credentials": {
+          "url": "https://sandbox.api.sap.com/sapreturnablepackagemanagement/odata/v4/MasterDataService",
+          "headers": {
+            "APIKey": "AGQcSmGAKyV69G0EqrIpDXgaGALB02nk"
+          }
+        }
+      },
+      "[production]": {
+        "db": "hana"
+      }
+    }
+  },
+  "dependencies": {
+    "@cap-js/hana": "^3.1.1",
+    "@cap-js/sqlite": "^3.1.1",
+    "@sap-cloud-sdk/connectivity": "^4",
+    "@sap-cloud-sdk/http-client": "^4",
+    "@sap-cloud-sdk/resilience": "^4",
+    "@sap/cds": "^10.1.0",
+    "@sap/xsenv": "^6.2.2"
+  },
+  "devDependencies": {
+    "@sap/cds-dk": "^10.1.2",
+    "cds-plugin-ui5": "^0.17.0",
+    "mbt": "^1.2.49",
+    "rimraf": "^5.0.5"
+  },
+  "workspaces": [
+    "app/*"
+  ],
+  "sapux": [
+    "app/businesspartnerapp"
+  ]
+}

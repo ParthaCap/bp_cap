@@ -1,0 +1,3 @@
+POST http://localhost:4004/odata/v4/bpextension/syncBP
+###
+GET http://localhost:4004/odata/v4/bpextension/BusinessPartnerExt

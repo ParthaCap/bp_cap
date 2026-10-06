@@ -1,0 +1,92 @@
+<mvc:View
+    controllerName="bpfreestyleapp.controller.View1"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns="sap.m"
+>
+    <Page
+        id="page"
+        title="{i18n>title}"
+    >
+        <content>
+            <VBox class="sapUiSmallMargin">
+                <Toolbar>
+                    <Title
+                        text="Business Partners"
+                        level="H2"
+                    />
+                    <Button
+                        text="Create BP"
+                        type="Emphasized"
+                        icon="sap-icon://create"
+                        press="onCreateBP"
+                    />
+                    <Button
+                        text="Edit"
+                        icon="sap-icon://edit"
+                        type="Transparent"
+                        press="onEditBP"
+                    />
+                    <Button
+                        text="Delete"
+                        icon="sap-icon://delete"
+                        type="Reject"
+                        press="onDeleteBP"
+                    />
+                    <ToolbarSpacer />
+                    <SearchField
+                        width="250px"
+                        placeholder="Search BP"
+                        liveChange="onSearch"
+                    />
+                    <Button
+                        text="Sync BP"
+                        type="Emphasized"
+                        icon="sap-icon://refresh"
+                        press="onSyncBP"
+                    />
+                </Toolbar>
+                <Table
+                    id="bpTable" mode="SingleSelectLeft"
+                    items="{/BusinessPartnerExt}"
+                    class="sapUiResponsiveMargin"
+                >
+                    <columns>
+                        <Column>
+                            <Text text="BP Number" />
+                        </Column>
+                        <Column>
+                            <Text text="Name" />
+                        </Column>
+                        <Column>
+                            <Text text="Customer" />
+                        </Column>
+                        <Column>
+                            <Text text="Vendor" />
+                        </Column>
+                        <Column>
+                            <Text text="Region" />
+                        </Column>
+                        <Column>
+                            <Text text="Risk Category" />
+                        </Column>
+                    </columns>
+                    <items>
+                        <ColumnListItem>
+                            <cells>
+                                <Text text="{businessPartnerNumber}" />
+                                <Text text="{businessPartnerName1}" />
+                                <Text text="{customerCode}" />
+                                <Text text="{vendorCode}" />
+                                <Text text="{region}" />
+                                <ObjectStatus
+                                    text="{riskCategory}"
+                                    state="Warning"
+                                />
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </VBox>
+        </content>
+    </Page>
+</mvc:View>

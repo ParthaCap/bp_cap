@@ -1,0 +1,3845 @@
+{
+ "meta": {
+  "creator": "cds-dk 10.0.7"
+ },
+ "$version": "2.0",
+ "definitions": {
+  "BusinessPartner.Address": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "address": {
+     "type": "cds.String"
+    },
+    "street": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "houseNumber": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "addressLine1": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "addressLine2": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "addressLine3": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "postalCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "city": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "countryKey_code": {
+     "type": "cds.String",
+     "length": 3,
+     "@Common.Label": "{i18n>Country}",
+     "@Common.ValueList.$Type": "Common.ValueListType",
+     "@Common.ValueList.Label": "{i18n>Country}",
+     "@Common.ValueList.CollectionPath": "Countries",
+     "@Common.ValueList.Parameters": [
+      {
+       "$Type": "Common.ValueListParameterInOut",
+       "LocalDataProperty": {
+        "=": "countryKey_code"
+       },
+       "ValueListProperty": "code"
+      },
+      {
+       "$Type": "Common.ValueListParameterDisplayOnly",
+       "ValueListProperty": "name"
+      }
+     ],
+     "doc": "{i18n>CountryCode.Description}"
+    },
+    "country": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "poBox": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "mobile": {
+     "type": "cds.String",
+     "length": 30
+    },
+    "telephone": {
+     "type": "cds.String",
+     "length": 30
+    },
+    "extension": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "faxNumber": {
+     "type": "cds.String",
+     "length": 31
+    },
+    "email": {
+     "type": "cds.String",
+     "length": 241
+    },
+    "contactPerson": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "countryKey": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Countries",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "countryKey",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "countryKey_code"
+       ]
+      }
+     ],
+     "@Common.Label": "{i18n>Country}",
+     "doc": "{i18n>CountryCode.Description}"
+    },
+    "companyCodes": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.CompanyCode",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "BusinessPartner.BusinessPartner": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "businessPartnerNumber": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "vendorCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "customerCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "companyCodeID_ID": {
+     "type": "cds.UUID"
+    },
+    "companyCode": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "businessPartnerName1": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "businessPartnerName2": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "addressID_ID": {
+     "type": "cds.UUID"
+    },
+    "address": {
+     "type": "cds.String"
+    },
+    "businessPartnerType": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "partnerRole_ID": {
+     "type": "cds.String"
+    },
+    "language_code": {
+     "type": "cds.String",
+     "length": 14,
+     "@Common.Label": "{i18n>Language}",
+     "@Common.ValueList.$Type": "Common.ValueListType",
+     "@Common.ValueList.Label": "{i18n>Language}",
+     "@Common.ValueList.CollectionPath": "Languages",
+     "@Common.ValueList.Parameters": [
+      {
+       "$Type": "Common.ValueListParameterInOut",
+       "LocalDataProperty": {
+        "=": "language_code"
+       },
+       "ValueListProperty": "code"
+      },
+      {
+       "$Type": "Common.ValueListParameterDisplayOnly",
+       "ValueListProperty": "name"
+      }
+     ],
+     "doc": "{i18n>LanguageCode.Description}"
+    },
+    "valueClaimExcluded": {
+     "type": "cds.Boolean",
+     "notNull": true,
+     "default": {
+      "val": false
+     }
+    },
+    "isMarkedForDeletion": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     }
+    },
+    "parentBusinessPartner": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "companyCodeID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.CompanyCode",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "companyCodeID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "companyCodeID_ID"
+       ]
+      }
+     ]
+    },
+    "addressID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Address",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "addressID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "addressID_ID"
+       ]
+      }
+     ]
+    },
+    "language": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Languages",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "language",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "language_code"
+       ]
+      }
+     ],
+     "@Common.Label": "{i18n>Language}",
+     "doc": "{i18n>LanguageCode.Description}"
+    },
+    "businessPartnerContactPersons": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.BusinessPartnerContactPersons",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "businessPartnerContactPersons",
+        "businessPartner"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.BusinessPartnerContactPersons": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "businessPartner_ID": {
+     "type": "cds.UUID"
+    },
+    "contactName": {
+     "type": "cds.String",
+     "length": 50
+    },
+    "contactEmail": {
+     "type": "cds.String",
+     "length": 100
+    },
+    "telephone": {
+     "type": "cds.String",
+     "length": 30
+    },
+    "documentProcessType_ID": {
+     "type": "cds.Integer"
+    },
+    "attachmentType_ID": {
+     "type": "cds.Integer"
+    },
+    "attachmentFieldControl": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "documentProcessTypeCode": {
+     "type": "cds.String",
+     "@Core.Computed": false
+    },
+    "attachmentTypeCode": {
+     "type": "cds.String",
+     "@Core.Computed": false
+    },
+    "businessPartner": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.BusinessPartner",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "businessPartner",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "businessPartner_ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.CompanyCode": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "companyCode": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "companyCodeName": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "countryKey_code": {
+     "type": "cds.String",
+     "length": 3,
+     "@Common.Label": "{i18n>Country}",
+     "@Common.ValueList.$Type": "Common.ValueListType",
+     "@Common.ValueList.Label": "{i18n>Country}",
+     "@Common.ValueList.CollectionPath": "Countries",
+     "@Common.ValueList.Parameters": [
+      {
+       "$Type": "Common.ValueListParameterInOut",
+       "LocalDataProperty": {
+        "=": "countryKey_code"
+       },
+       "ValueListProperty": "code"
+      },
+      {
+       "$Type": "Common.ValueListParameterDisplayOnly",
+       "ValueListProperty": "name"
+      }
+     ],
+     "doc": "{i18n>CountryCode.Description}"
+    },
+    "currency_code": {
+     "type": "cds.String",
+     "length": 3,
+     "@Common.Label": "{i18n>Currency}",
+     "@Common.ValueList.$Type": "Common.ValueListType",
+     "@Common.ValueList.Label": "{i18n>Currency}",
+     "@Common.ValueList.CollectionPath": "Currencies",
+     "@Common.ValueList.Parameters": [
+      {
+       "$Type": "Common.ValueListParameterInOut",
+       "LocalDataProperty": {
+        "=": "currency_code"
+       },
+       "ValueListProperty": "code"
+      },
+      {
+       "$Type": "Common.ValueListParameterDisplayOnly",
+       "ValueListProperty": "name"
+      }
+     ],
+     "doc": "{i18n>CurrencyCode.Description}"
+    },
+    "addressID_ID": {
+     "type": "cds.UUID"
+    },
+    "address": {
+     "type": "cds.String"
+    },
+    "countryKey": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Countries",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "countryKey",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "countryKey_code"
+       ]
+      }
+     ],
+     "@Common.Label": "{i18n>Country}",
+     "doc": "{i18n>CountryCode.Description}"
+    },
+    "currency": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Currencies",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "currency",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "currency_code"
+       ]
+      }
+     ],
+     "@Common.Label": "{i18n>Currency}",
+     "doc": "{i18n>CurrencyCode.Description}"
+    },
+    "addressID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Address",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "addressID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "addressID_ID"
+       ]
+      }
+     ]
+    },
+    "plants": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Plant",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "businessPartners": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.BusinessPartner",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "BusinessPartner.SalesDistributionChannel": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "distributionChannel": {
+     "key": true,
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true
+    },
+    "distributionChannelName": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "salesOrganization": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    }
+   }
+  },
+  "BusinessPartner.SalesDivision": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "salesDivision": {
+     "key": true,
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true
+    },
+    "salesDivisionName": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "salesOrganization": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    }
+   }
+  },
+  "BusinessPartner.MaterialMasterGeneralData": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "materialDescription": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "materialType": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "materialGroup": {
+     "type": "cds.String",
+     "length": 9
+    },
+    "baseUnitOfMeasure_code": {
+     "type": "cds.String"
+    },
+    "division": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "xPlantMaterialStatus": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "validFrom": {
+     "type": "cds.Date"
+    },
+    "grossWeight": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3
+    },
+    "weightUnit_code": {
+     "type": "cds.String"
+    },
+    "netWeight": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3
+    },
+    "volume": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3
+    },
+    "volumeUnit_code": {
+     "type": "cds.String"
+    },
+    "sizeDimensions": {
+     "type": "cds.String",
+     "length": 32
+    },
+    "EAN_UPC": {
+     "type": "cds.String",
+     "length": 18
+    },
+    "EANCategary": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "productCompositionIndicator": {
+     "type": "cds.String",
+     "length": 1
+    },
+    "packagingMaterialGroup": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "materialSerialManaged_ID": {
+     "type": "cds.Integer"
+    },
+    "baseUnitOfMeasure": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "baseUnitOfMeasure",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "baseUnitOfMeasure_code"
+       ]
+      }
+     ]
+    },
+    "weightUnit": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "weightUnit",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "weightUnit_code"
+       ]
+      }
+     ]
+    },
+    "volumeUnit": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "volumeUnit",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "volumeUnit_code"
+       ]
+      }
+     ]
+    },
+    "plants": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterPlantData",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.MaterialMasterGeneralData_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterGeneralData_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.MaterialMasterPlantData": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "materialCodeID_ID": {
+     "type": "cds.UUID"
+    },
+    "plantID_ID": {
+     "type": "cds.UUID"
+    },
+    "plant": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "containerRequirements": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "grossWeight": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3
+    },
+    "weightUnit_code": {
+     "type": "cds.String"
+    },
+    "netWeight": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3
+    },
+    "volume": {
+     "type": "cds.Decimal",
+     "precision": 13,
+     "scale": 3
+    },
+    "serialNumberProfile": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "reorderPoint": {
+     "type": "cds.String",
+     "length": 13
+    },
+    "mrpType": {
+     "type": "cds.String",
+     "length": 3
+    },
+    "pricingIndicator": {
+     "type": "cds.String",
+     "length": 1
+    },
+    "standardPrice_price": {
+     "type": "cds.Decimal",
+     "precision": 11,
+     "scale": 2
+    },
+    "movingAveragePrice_price": {
+     "type": "cds.Decimal",
+     "precision": 11,
+     "scale": 2
+    },
+    "safetyStock": {
+     "type": "cds.Integer"
+    },
+    "maximumStockLevel": {
+     "type": "cds.Integer"
+    },
+    "hasStorageLocations": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "materialCodeID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterGeneralData",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "materialCodeID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "materialCodeID_ID"
+       ]
+      }
+     ]
+    },
+    "plantID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Plant",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "plantID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "plantID_ID"
+       ]
+      }
+     ]
+    },
+    "weightUnit": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "weightUnit",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "weightUnit_code"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.MaterialSales": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "materialCode": {
+     "key": true,
+     "type": "cds.String",
+     "length": 40,
+     "notNull": true
+    },
+    "salesOrganization": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    },
+    "distributionChannel": {
+     "key": true,
+     "type": "cds.String",
+     "length": 2,
+     "notNull": true
+    }
+   }
+  },
+  "BusinessPartner.Plant": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },    
+    "plant": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "plantName": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "plantNameExtension": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "companyCodeID_ID": {
+     "type": "cds.UUID"
+    },
+    "companyCode": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "customerNoOfPlant": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "supplierNoOfPlant": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "addressID_ID": {
+     "type": "cds.UUID"
+    },
+    "address": {
+     "type": "cds.String"
+    },
+    "factoryCalendar": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "companyCodeID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.CompanyCode",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "companyCodeID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "companyCodeID_ID"
+       ]
+      }
+     ]
+    },
+    "addressID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Address",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "addressID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "addressID_ID"
+       ]
+      }
+     ]
+    },
+    "materialMasterPlantData": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterPlantData",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "storageLocation": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.StorageLocation",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "sourceSystem": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.SourceSystemInfos",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "sourceSystem",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.SalesOrganizations": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "salesOrganization": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    },
+    "salesOrganizationName": {
+     "type": "cds.String",
+     "length": 25
+    },
+    "companyCode": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    }
+   }
+  },
+  "BusinessPartner.StorageLocation": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "storageLocation": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "storageLocationName": {
+     "type": "cds.String",
+     "length": 25
+    },
+    "plantCodeID_ID": {
+     "type": "cds.UUID"
+    },
+    "plantCode": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "plantCodeID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Plant",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "plantCodeID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "plantCodeID_ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.User": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "businessUserId": {
+     "type": "cds.String",
+     "length": 100
+    },
+    "firstName": {
+     "type": "cds.String",
+     "length": 50
+    },
+    "lastName": {
+     "type": "cds.String",
+     "length": 50
+    },
+    "number": {
+     "type": "cds.String",
+     "length": 100
+    },
+    "email": {
+     "type": "cds.String",
+     "length": 241
+    },
+    "address": {
+     "type": "cds.String"
+    },
+    "logOnName": {
+     "type": "cds.String",
+     "length": 100
+    },
+    "role": {
+     "type": "cds.String",
+     "length": 2
+    }
+   }
+  },
+  "BusinessPartner.MaterialMasterGeneralDataText": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "materialDescription": {
+     "type": "cds.String",
+     "length": 40
+    }
+   }
+  },
+  "BusinessPartner.MaterialSerialNumber": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "materialID_ID": {
+     "type": "cds.UUID"
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "serialNumber": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "equipmentNumber": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "assetNumber": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "status_ID": {
+     "type": "cds.Integer"
+    },
+    "ownershipType_ID": {
+     "type": "cds.String"
+    },
+    "ownership_ID": {
+     "type": "cds.UUID"
+    },
+    "ownershipCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "imeiNumber": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "barcode": {
+     "type": "cds.String",
+     "length": 48
+    },
+    "rfid": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "color": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "materialID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterGeneralData",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "materialID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "materialID_ID"
+       ]
+      }
+     ]
+    },
+    "materialSerialAddlStatus": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.MaterialSerialAddlStatusRel",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "materialSerialAddlStatus",
+        "materialSerialNumberID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ]
+    },
+    "postingDocumentSerialNumbers": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PostingDocumentSerialNumbers",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "BusinessPartner.MaterialSerialAddlStatusRel": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "materialSerialNumberID_ID": {
+     "type": "cds.UUID"
+    },
+    "materialSerialAddlStatusValID_ID": {
+     "type": "cds.UUID"
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "serialNumber": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "statusCode": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "materialSerialNumberID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialSerialNumber",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "materialSerialNumberID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "materialSerialNumberID_ID"
+       ]
+      }
+     ]
+    },
+    "materialSerialAddlStatusValID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialSerialStatusCode",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "materialSerialAddlStatusValID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "materialSerialAddlStatusValID_ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.MaterialSerialStatusType": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "statusTypeCode": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "statusTypeDescription": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "isFieldControl": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.MaterialSerialStatusType_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialSerialStatusType_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.MaterialSerialStatusCode": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "statusCode": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "statusType_ID": {
+     "type": "cds.UUID"
+    },
+    "statusTypeCode": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "statusDescription": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "isFieldControl": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "statusType": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialSerialStatusType",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "statusType",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "statusType_ID"
+       ]
+      }
+     ]
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.MaterialSerialStatusCode_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialSerialStatusCode_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.UnitOfMeasures": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "notNull": true
+    },
+    "isoCode": {
+     "type": "cds.String"
+    },
+    "name": {
+     "type": "cds.String"
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.UnitOfMeasures_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "code"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.SalesDocumentTypes": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "documentType": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    },
+    "description": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "isDefault": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     }
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.SalesDocumentTypes_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.SalesDocumentTypes_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "documentType"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "documentType"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.PlanningRelevances": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.Integer",
+     "notNull": true,
+     "@Validation.AllowedValues": [
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "AUTOMATIC_REPLENISHMENT_CREATION",
+       "Value": 1
+      },
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "MANUAL_REPLENISHMENT_CREATION",
+       "Value": 2
+      }
+     ]
+    },
+    "name": {
+     "type": "cds.String"
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.PlanningRelevances_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PlanningRelevances_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "ID"
+       ]
+      }
+     ]
+    }
+   },
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false
+  },
+  "BusinessPartner.Countries": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "@Common.Label": "{i18n>Name}"
+    },
+    "descr": {
+     "type": "cds.String",
+     "length": 1000,
+     "@Common.Label": "{i18n>Description}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "name"
+     },
+     "@Common.Label": "{i18n>CountryCode}"
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.Countries_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Countries_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "code"
+       ]
+      }
+     ]
+    }
+   },
+   "@UI.Identification": [
+    {
+     "$Type": "UI.DataField",
+     "Value": {
+      "=": "name"
+     }
+    }
+   ]
+  },
+  "BusinessPartner.Languages": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "@Common.Label": "{i18n>Name}"
+    },
+    "descr": {
+     "type": "cds.String",
+     "length": 1000,
+     "@Common.Label": "{i18n>Description}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "name"
+     },
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.Languages_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Languages_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "code"
+       ]
+      }
+     ]
+    }
+   },
+   "@UI.Identification": [
+    {
+     "$Type": "UI.DataField",
+     "Value": {
+      "=": "name"
+     }
+    }
+   ]
+  },
+  "BusinessPartner.Currencies": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "@Common.Label": "{i18n>Name}"
+    },
+    "descr": {
+     "type": "cds.String",
+     "length": 1000,
+     "@Common.Label": "{i18n>Description}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "name"
+     },
+     "@Common.Label": "{i18n>CurrencyCode}"
+    },
+    "symbol": {
+     "type": "cds.String",
+     "length": 5,
+     "@Common.Label": "{i18n>CurrencySymbol}"
+    },
+    "minorUnit": {
+     "type": "cds.Integer",
+     "@Common.Label": "{i18n>CurrencyMinorUnit}"
+    },
+    "texts": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.Currencies_texts",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "localized": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Currencies_texts",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "localized",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "code"
+       ]
+      }
+     ]
+    }
+   },
+   "@UI.Identification": [
+    {
+     "$Type": "UI.DataField",
+     "Value": {
+      "=": "name"
+     }
+    }
+   ]
+  },
+  "BusinessPartner.SourceSystemInfos": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "systemType_ID": {
+     "type": "cds.String"
+    },
+    "plant_ID": {
+     "type": "cds.UUID"
+    },
+    "plant": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.Plant",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "plant",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "plant_ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.PostingDocumentSerialNumbers": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "postingDocumentNumber_ID": {
+     "type": "cds.UUID"
+    },
+    "serialNumberCode": {
+     "type": "cds.String",
+     "length": 20
+    },
+    "serialNumber_ID": {
+     "type": "cds.UUID"
+    },
+    "handlingUnitNumber": {
+     "type": "cds.String",
+     "length": 30
+    },
+    "postingDocumentNumber": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PostingDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "postingDocumentNumber",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "postingDocumentNumber_ID"
+       ]
+      }
+     ]
+    },
+    "serialNumber": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialSerialNumber",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "serialNumber",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "serialNumber_ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.PostingDocuments": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "partnerRelation_ID": {
+     "type": "cds.UUID"
+    },
+    "returnableAccountID_ID": {
+     "type": "cds.UUID"
+    },
+    "postingDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "referencePostingDocumentID_ID": {
+     "type": "cds.UUID"
+    },
+    "postingDocumentStatus_ID": {
+     "type": "cds.Integer"
+    },
+    "postingDocumentIndicator_ID": {
+     "type": "cds.Integer"
+    },
+    "postingType_ID": {
+     "type": "cds.UUID"
+    },
+    "postingDate": {
+     "type": "cds.Date"
+    },
+    "documentDate": {
+     "type": "cds.Date"
+    },
+    "comments": {
+     "type": "cds.String"
+    },
+    "reprocessComments": {
+     "type": "cds.String"
+    },
+    "cancelComments": {
+     "type": "cds.String"
+    },
+    "reversalDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "cancelledDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "returnableMaterialQuantity": {
+     "type": "cds.Integer"
+    },
+    "returnableMaterialUOM_code": {
+     "type": "cds.String"
+    },
+    "informingPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "informingPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "senderPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "senderPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "senderPartnerDescription": {
+     "type": "cds.String"
+    },
+    "recipientPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "recipientPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "recipientPartnerDescription": {
+     "type": "cds.String"
+    },
+    "settlementPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "settlementPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "settlementPartnerDescription": {
+     "type": "cds.String"
+    },
+    "deliveryNote": {
+     "type": "cds.String"
+    },
+    "deliveryNoteItemNumber": {
+     "type": "cds.Integer"
+    },
+    "deliveryNoteQuantity": {
+     "type": "cds.Integer"
+    },
+    "deliveryNoteUOM_code": {
+     "type": "cds.String"
+    },
+    "materialDocumentNumber": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "materialDocumentItemNumber": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "materialDocumentYear": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "vendorCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "customerCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "material_ID": {
+     "type": "cds.UUID"
+    },
+    "plant": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "movementType": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "movementIndicator_ID": {
+     "type": "cds.String",
+     "length": 1
+    },
+    "receiptIndicator_ID": {
+     "type": "cds.String",
+     "length": 1
+    },
+    "locationType_ID": {
+     "type": "cds.String"
+    },
+    "locationID_ID": {
+     "type": "cds.UUID"
+    },
+    "partnerType_ID": {
+     "type": "cds.String"
+    },
+    "partnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "alertCount": {
+     "type": "cds.Integer"
+    },
+    "handlingUnitNumber": {
+     "type": "cds.String",
+     "length": 30
+    },
+    "totalAccountBalance": {
+     "type": "cds.Integer"
+    },
+    "matchedQuantity": {
+     "type": "cds.Integer"
+    },
+    "unmatchedQuantity": {
+     "type": "cds.Integer"
+    },
+    "matchedStatus_ID": {
+     "type": "cds.Integer"
+    },
+    "documentMatchingType_ID": {
+     "type": "cds.Integer"
+    },
+    "inventoryStockTypeID_ID": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "receivingPlant": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "externalDeliveryNoteNumber": {
+     "type": "cds.String"
+    },
+    "correctionDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "inventoryCount_ID": {
+     "type": "cds.UUID"
+    },
+    "referencePackagingIssue_ID": {
+     "type": "cds.UUID"
+    },
+    "storageLocation": {
+     "type": "cds.String"
+    },
+    "unloadingPoint": {
+     "type": "cds.String",
+     "length": 25
+    },
+    "bulkPosting_ID": {
+     "type": "cds.UUID"
+    },
+    "isDocumentInError": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "isDocumentBeCancelled": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "isDocumentToBeChecked": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "yearly": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "quarterly": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "monthly": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "isCorrectionPosting": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "isCheckAccountBalance": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": false
+    },
+    "destinationUrl": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "showDeliveryNoteAsLink": {
+     "type": "cds.Boolean",
+     "@Core.Computed": true
+    },
+    "isApi": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "relationshipBalance": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "isBulkPosting": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "partnerRelation": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.AdditionalAccountPartnerRelationships",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "partnerRelation",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "partnerRelation_ID"
+       ]
+      }
+     ]
+    },
+    "referencePostingDocumentID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.ActivePostingDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "referencePostingDocumentID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "referencePostingDocumentID_ID"
+       ]
+      }
+     ]
+    },
+    "returnableMaterialUOM": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "returnableMaterialUOM",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "returnableMaterialUOM_code"
+       ]
+      }
+     ]
+    },
+    "deliveryNoteUOM": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "deliveryNoteUOM",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "deliveryNoteUOM_code"
+       ]
+      }
+     ]
+    },
+    "material": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterGeneralData",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "material",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "material_ID"
+       ]
+      }
+     ]
+    },
+    "referenceDocument": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.ReferenceDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "referenceDocument",
+        "parentID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ]
+    },
+    "postingDocSerialNumbers": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.PostingDocumentSerialNumbers",
+     "cardinality": {
+      "max": "*"
+     },
+     "on": [
+      {
+       "ref": [
+        "postingDocSerialNumbers",
+        "postingDocumentNumber"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "$self"
+       ]
+      }
+     ]
+    },
+    "alertLogs": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PostingDocumentAlertLogs",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "BusinessPartner.AdditionalAccountPartnerRelationships": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "locationType_ID": {
+     "type": "cds.String"
+    },
+    "locationID_ID": {
+     "type": "cds.UUID"
+    },
+    "partnerType_ID": {
+     "type": "cds.String"
+    },
+    "partnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "companyCode_ID": {
+     "type": "cds.UUID"
+    },
+    "validFrom": {
+     "type": "cds.Date"
+    },
+    "validTo": {
+     "type": "cds.Date"
+    },
+    "isMainRelationShip": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     }
+    },
+    "reorderPoint": {
+     "type": "cds.Integer"
+    },
+    "leadTime": {
+     "type": "cds.Integer"
+    },
+    "orderQuantity": {
+     "type": "cds.Integer"
+    },
+    "totalAccountBalance": {
+     "type": "cds.Integer"
+    },
+    "totalAccountBalanceUOM_code": {
+     "type": "cds.String"
+    },
+    "returnableAccountID_ID": {
+     "type": "cds.UUID"
+    },
+    "reimburseDeliveryCharge_ID": {
+     "type": "cds.Integer"
+    },
+    "isFieldControl": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "mainRelationshipFieldControl": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "mainRelationshipHighlight": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "isNotMainRelationship": {
+     "type": "cds.Boolean",
+     "@Core.Computed": true
+    },
+    "isCreate": {
+     "type": "cds.Boolean",
+     "@Core.Computed": true
+    },
+    "isUpdate": {
+     "type": "cds.Boolean",
+     "@Core.Computed": true
+    },
+    "isDelete": {
+     "type": "cds.Boolean",
+     "@Core.Computed": true
+    },
+    "partnerReturnableAccountID": {
+     "type": "cds.UUID"
+    },
+    "companyCode": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.CompanyCode",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "companyCode",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "companyCode_ID"
+       ]
+      }
+     ]
+    },
+    "totalAccountBalanceUOM": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "totalAccountBalanceUOM",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "totalAccountBalanceUOM_code"
+       ]
+      }
+     ]
+    }
+   },
+   "@Capabilities.DeleteRestrictions.Deletable": false,
+   "@Capabilities.InsertRestrictions.Insertable": false,
+   "@Capabilities.UpdateRestrictions.Updatable": false
+  },
+  "BusinessPartner.ActivePostingDocuments": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "partnerRelation_ID": {
+     "type": "cds.UUID"
+    },
+    "returnableAccountID_ID": {
+     "type": "cds.UUID"
+    },
+    "postingDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "referencePostingDocumentID_ID": {
+     "type": "cds.UUID"
+    },
+    "postingDocumentStatus_ID": {
+     "type": "cds.Integer"
+    },
+    "postingDocumentIndicator_ID": {
+     "type": "cds.Integer"
+    },
+    "postingType_ID": {
+     "type": "cds.UUID"
+    },
+    "postingDate": {
+     "type": "cds.Date"
+    },
+    "documentDate": {
+     "type": "cds.Date"
+    },
+    "comments": {
+     "type": "cds.String"
+    },
+    "reprocessComments": {
+     "type": "cds.String"
+    },
+    "cancelComments": {
+     "type": "cds.String"
+    },
+    "reversalDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "cancelledDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "returnableMaterialQuantity": {
+     "type": "cds.Integer"
+    },
+    "returnableMaterialUOM_code": {
+     "type": "cds.String"
+    },
+    "informingPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "informingPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "senderPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "senderPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "senderPartnerDescription": {
+     "type": "cds.String"
+    },
+    "recipientPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "recipientPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "recipientPartnerDescription": {
+     "type": "cds.String"
+    },
+    "settlementPartnerType_ID": {
+     "type": "cds.String"
+    },
+    "settlementPartnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "settlementPartnerDescription": {
+     "type": "cds.String"
+    },
+    "deliveryNote": {
+     "type": "cds.String"
+    },
+    "deliveryNoteItemNumber": {
+     "type": "cds.Integer"
+    },
+    "deliveryNoteQuantity": {
+     "type": "cds.Integer"
+    },
+    "deliveryNoteUOM_code": {
+     "type": "cds.String"
+    },
+    "materialDocumentNumber": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "materialDocumentItemNumber": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "materialDocumentYear": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "vendorCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "customerCode": {
+     "type": "cds.String",
+     "length": 10
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "material_ID": {
+     "type": "cds.UUID"
+    },
+    "plant": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "movementType": {
+     "type": "cds.String",
+     "length": 60
+    },
+    "movementIndicator_ID": {
+     "type": "cds.String",
+     "length": 1
+    },
+    "receiptIndicator_ID": {
+     "type": "cds.String",
+     "length": 1
+    },
+    "locationType_ID": {
+     "type": "cds.String"
+    },
+    "locationID_ID": {
+     "type": "cds.UUID"
+    },
+    "partnerType_ID": {
+     "type": "cds.String"
+    },
+    "partnerID_ID": {
+     "type": "cds.UUID"
+    },
+    "alertCount": {
+     "type": "cds.Integer"
+    },
+    "handlingUnitNumber": {
+     "type": "cds.String",
+     "length": 30
+    },
+    "totalAccountBalance": {
+     "type": "cds.Integer"
+    },
+    "matchedQuantity": {
+     "type": "cds.Integer"
+    },
+    "unmatchedQuantity": {
+     "type": "cds.Integer"
+    },
+    "matchedStatus_ID": {
+     "type": "cds.Integer"
+    },
+    "documentMatchingType_ID": {
+     "type": "cds.Integer"
+    },
+    "inventoryStockTypeID_ID": {
+     "type": "cds.String",
+     "length": 2
+    },
+    "receivingPlant": {
+     "type": "cds.String",
+     "length": 4
+    },
+    "externalDeliveryNoteNumber": {
+     "type": "cds.String"
+    },
+    "correctionDocumentNumber": {
+     "type": "cds.String",
+     "length": 21
+    },
+    "inventoryCount_ID": {
+     "type": "cds.UUID"
+    },
+    "referencePackagingIssue_ID": {
+     "type": "cds.UUID"
+    },
+    "storageLocation": {
+     "type": "cds.String"
+    },
+    "unloadingPoint": {
+     "type": "cds.String",
+     "length": 25
+    },
+    "bulkPosting_ID": {
+     "type": "cds.UUID"
+    },
+    "isDocumentInError": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "isDocumentBeCancelled": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "isDocumentToBeChecked": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "yearly": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "quarterly": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "monthly": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "isCorrectionPosting": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "isCheckAccountBalance": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": false
+    },
+    "destinationUrl": {
+     "type": "cds.String",
+     "@Core.Computed": true
+    },
+    "showDeliveryNoteAsLink": {
+     "type": "cds.Boolean",
+     "@Core.Computed": true
+    },
+    "isApi": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "relationshipBalance": {
+     "type": "cds.Integer",
+     "@Core.Computed": true
+    },
+    "isBulkPosting": {
+     "type": "cds.Boolean",
+     "default": {
+      "val": false
+     },
+     "@Core.Computed": true
+    },
+    "partnerRelation": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.AdditionalAccountPartnerRelationships",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "partnerRelation",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "partnerRelation_ID"
+       ]
+      }
+     ]
+    },
+    "referencePostingDocumentID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.ActivePostingDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "referencePostingDocumentID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "referencePostingDocumentID_ID"
+       ]
+      }
+     ]
+    },
+    "returnableMaterialUOM": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "returnableMaterialUOM",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "returnableMaterialUOM_code"
+       ]
+      }
+     ]
+    },
+    "deliveryNoteUOM": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.UnitOfMeasures",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "deliveryNoteUOM",
+        "code"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "deliveryNoteUOM_code"
+       ]
+      }
+     ]
+    },
+    "material": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.MaterialMasterGeneralData",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "material",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "material_ID"
+       ]
+      }
+     ]
+    },
+    "referenceDocument": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.ReferenceDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "keys": []
+    },
+    "postingDocSerialNumbers": {
+     "type": "cds.Composition",
+     "target": "BusinessPartner.PostingDocumentSerialNumbers",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    },
+    "alertLogs": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PostingDocumentAlertLogs",
+     "cardinality": {
+      "max": "*"
+     },
+     "keys": []
+    }
+   }
+  },
+  "BusinessPartner.ReferenceDocuments": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "referenceDocument": {
+     "type": "cds.String"
+    },
+    "referenceDocumentDate": {
+     "type": "cds.Date"
+    },
+    "billOfLading": {
+     "type": "cds.String"
+    },
+    "parentID_ID": {
+     "type": "cds.UUID"
+    },
+    "parentID": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PostingDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "parentID",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "parentID_ID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.PostingDocumentAlertLogs": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "createdAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>CreatedAt}"
+    },
+    "createdBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Immutable": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>CreatedBy}"
+    },
+    "modifiedAt": {
+     "type": "cds.Timestamp",
+     "@odata.Precision": 7,
+     "@odata.Type": "Edm.DateTimeOffset",
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "@Common.Label": "{i18n>ChangedAt}"
+    },
+    "modifiedBy": {
+     "type": "cds.String",
+     "length": 255,
+     "@UI.HiddenFilter": true,
+     "@UI.ExcludeFromNavigationContext": true,
+     "@Core.Computed": true,
+     "doc": "{i18n>UserID.Description}",
+     "@Common.Label": "{i18n>ChangedBy}"
+    },
+    "message": {
+     "type": "cds.String"
+    },
+    "placeholderValues": {
+     "type": "cds.String"
+    },
+    "details": {
+     "type": "cds.String"
+    },
+    "order": {
+     "type": "cds.Integer",
+     "default": {
+      "val": 0
+     }
+    },
+    "correctiveActions": {
+     "type": "cds.String"
+    },
+    "isRelevantForNotificaton": {
+     "type": "cds.Boolean"
+    },
+    "isRelevantForNotification": {
+     "type": "cds.Boolean"
+    },
+    "alertCategory_ID": {
+     "type": "cds.Integer"
+    },
+    "alertSeverity_ID": {
+     "type": "cds.Integer"
+    },
+    "alertSource_ID": {
+     "type": "cds.Integer"
+    },
+    "alertSourceUID": {
+     "type": "cds.String",
+     "length": 36
+    },
+    "detailsPlaceholderValues": {
+     "type": "cds.String"
+    },
+    "postingDocument": {
+     "type": "cds.Association",
+     "target": "BusinessPartner.PostingDocuments",
+     "cardinality": {
+      "max": 1
+     },
+     "on": [
+      {
+       "ref": [
+        "postingDocument",
+        "ID"
+       ]
+      },
+      "=",
+      {
+       "ref": [
+        "alertSourceUID"
+       ]
+      }
+     ]
+    }
+   }
+  },
+  "BusinessPartner.MaterialMasterGeneralData_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "materialCode": {
+     "type": "cds.String",
+     "length": 40
+    },
+    "materialDescription": {
+     "type": "cds.String",
+     "length": 40
+    }
+   }
+  },
+  "BusinessPartner.MaterialSerialStatusType_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "statusTypeDescription": {
+     "type": "cds.String",
+     "length": 60
+    }
+   }
+  },
+  "BusinessPartner.MaterialSerialStatusCode_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "ID": {
+     "key": true,
+     "type": "cds.UUID",
+     "notNull": true,
+     "@Core.ComputedDefaultValue": true
+    },
+    "statusDescription": {
+     "type": "cds.String",
+     "length": 60
+    }
+   }
+  },
+  "BusinessPartner.UnitOfMeasures_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "notNull": true
+    },
+    "name": {
+     "type": "cds.String"
+    }
+   }
+  },
+  "BusinessPartner.SalesDocumentTypes_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "documentType": {
+     "key": true,
+     "type": "cds.String",
+     "length": 4,
+     "notNull": true
+    },
+    "description": {
+     "type": "cds.String",
+     "length": 20
+    }
+   }
+  },
+  "BusinessPartner.PlanningRelevances_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "ID": {
+     "key": true,
+     "type": "cds.Integer",
+     "notNull": true,
+     "@Validation.AllowedValues": [
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "AUTOMATIC_REPLENISHMENT_CREATION",
+       "Value": 1
+      },
+      {
+       "$Type": "Validation.AllowedValue",
+       "@Core.SymbolicName": "MANUAL_REPLENISHMENT_CREATION",
+       "Value": 2
+      }
+     ]
+    },
+    "name": {
+     "type": "cds.String"
+    }
+   }
+  },
+  "BusinessPartner.Countries_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "@Common.Label": "{i18n>Name}"
+    },
+    "descr": {
+     "type": "cds.String",
+     "length": 1000,
+     "@Common.Label": "{i18n>Description}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "name"
+     },
+     "@Common.Label": "{i18n>CountryCode}"
+    }
+   }
+  },
+  "BusinessPartner.Languages_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "@Common.Label": "{i18n>Name}"
+    },
+    "descr": {
+     "type": "cds.String",
+     "length": 1000,
+     "@Common.Label": "{i18n>Description}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "name"
+     },
+     "@Common.Label": "{i18n>LanguageCode}"
+    }
+   }
+  },
+  "BusinessPartner.Currencies_texts": {
+   "kind": "entity",
+   "@cds.external": true,
+   "@cds.persistence.skip": true,
+   "elements": {
+    "locale": {
+     "key": true,
+     "type": "cds.String",
+     "length": 14,
+     "notNull": true,
+     "@Common.Label": "{i18n>LanguageCode}"
+    },
+    "name": {
+     "type": "cds.String",
+     "length": 255,
+     "@Common.Label": "{i18n>Name}"
+    },
+    "descr": {
+     "type": "cds.String",
+     "length": 1000,
+     "@Common.Label": "{i18n>Description}"
+    },
+    "code": {
+     "key": true,
+     "type": "cds.String",
+     "length": 3,
+     "notNull": true,
+     "@Common.Text": {
+      "=": "name"
+     },
+     "@Common.Label": "{i18n>CurrencyCode}"
+    }
+   }
+  },
+  "BusinessPartner": {
+   "kind": "service",
+   "@cds.external": true
+  }
+ }
+}
