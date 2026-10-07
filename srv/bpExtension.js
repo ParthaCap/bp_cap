@@ -1,4 +1,5 @@
 const cds = require('@sap/cds');
+const { SELECT } = require('@sap/cds/lib/ql/cds-ql');
 
 module.exports = cds.service.impl(async function () {
 
@@ -9,7 +10,9 @@ module.exports = cds.service.impl(async function () {
     const { BusinessPartnerExt } = cds.entities('db.schema');
     this.on('syncBP', async req => {
         const tx = cds.transaction(req);
-
+        const dbRecords = await SELECT.from(BusinessPartnerExt).columns('ID');
+        const existingData = new Set(dbRecords.map(r=>r.ID));
+        console.log('tableRec:',dbRecords);
         let bpData = await bpAPI.run(
             SELECT.from(BpEntity)
                 .columns(
@@ -19,11 +22,12 @@ module.exports = cds.service.impl(async function () {
                     'customerCode',
                     'businessPartnerName1'
                 )
-                .limit(50)
+                //.limit(51)
         );
         //console.log('array',bpData);
         const bpArray = bpData.value || bpData || [];
-        let records = bpArray.map(bp => ({
+        const newRecords = bpArray.filter(bp=>!existingData.has(bp.ID));
+        let records = newRecords.map(bp => ({
             ID: bp.ID,
             businessPartnerNumber: bp.businessPartnerNumber,
             vendorCode: bp.vendorCode,
